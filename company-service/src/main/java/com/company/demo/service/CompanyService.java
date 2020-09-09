@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.company.demo.entity.Company;
+import com.company.demo.entity.IPODetail;
 import com.company.demo.model.StockExchange;
 import com.company.demo.entity.StockPrice;
 
@@ -20,6 +21,7 @@ public interface CompanyService {
 	public void addStockPrice(StockPrice stockPrice);
 	public int removeStockPrice(String companyName, String exchangeName, String from, String to);
 	public List<StockPrice> retrieveStockPrice(String companyName, String exchangeName, String from, String to);
-	//public String getCompanyIPODetails(String companyName);
+	public List<IPODetail> getIPODetails(String companyName);
+	public void addIPODetail(IPODetail ipo);
 
 }

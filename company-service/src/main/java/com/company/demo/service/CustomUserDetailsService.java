@@ -23,9 +23,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		System.out.println("Sector Service called");
+	//	System.out.println("Sector Service called");
 		CustomUser user= userClient.getByUsername(username);
-		System.out.println(user.getUsername()+" "+user.getPassword()+" from Client call");
+	//	System.out.println(user.getUsername()+" "+user.getPassword()+" from Client call");
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority(user.getRole()));
 		return new User(user.getUsername(), user.getPassword(), authorities);

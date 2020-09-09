@@ -14,4 +14,6 @@ public interface CompanyRepository extends JpaRepository<Company,Long>{
 	public List<Company> findByName(String companyName); 
 	public List<Company> findBySectorName(String sectorName);
 	
+	@Query(value="select * from company where name like concat(:companyName, '%') ", nativeQuery= true)
+	public List<Company> findMatchingCompany(String companyName);
 }

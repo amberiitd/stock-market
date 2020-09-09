@@ -37,6 +37,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable()
 			.authorizeRequests()
+			.antMatchers("/company/add-company/**","/company/register-company/**", "/company/add-stock-price/**", 
+					 "/company/add-stock-price-list/**", "/company/remove-stock-price/**", "/company/add-IPO/**").hasAnyAuthority("ADMIN")
 			.anyRequest().authenticated()
 			.and()
 			.sessionManagement()

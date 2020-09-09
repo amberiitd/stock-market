@@ -13,8 +13,10 @@ import org.springframework.stereotype.Service;
 import com.company.demo.client.CompanyStockClient;
 import com.company.demo.client.StockServiceClient;
 import com.company.demo.dao.CompanyRepository;
+import com.company.demo.dao.IPODetailRepository;
 import com.company.demo.dao.StockPriceRepository;
 import com.company.demo.entity.Company;
+import com.company.demo.entity.IPODetail;
 import com.company.demo.entity.StockPrice;
 import com.company.demo.model.StockExchange;
 
@@ -34,11 +36,14 @@ public class CompanyServiceImpl implements CompanyService {
 	@Autowired
 	private StockServiceClient stockServiceClient;
 	
+	@Autowired
+	private IPODetailRepository IPODetailRepo;
+	
 	
 	@Override
 	public List<Company> getMatchingCompanies(String pattern) {
 		// TODO Auto-generated method stub
-		return null;
+		return companyRepo.findMatchingCompany(pattern);
 	}
 
 	@Override
@@ -124,6 +129,18 @@ public class CompanyServiceImpl implements CompanyService {
 		// TODO Auto-generated method stub
 		return stockPriceRepo.getStockPrice(companyStockClient.getCode(companyName, exchangeName), from, to);
 		
+	}
+
+	@Override
+	public List<IPODetail> getIPODetails(String companyName) {
+		return IPODetailRepo.findByCompanyName(companyName);
+	}
+
+	@Override
+	@Transactional
+	public void addIPODetail(IPODetail ipo) {
+		// TODO Auto-generated method stub
+		IPODetailRepo.save(ipo);
 	}
 
 	

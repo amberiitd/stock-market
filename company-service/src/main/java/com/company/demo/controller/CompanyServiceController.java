@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.company.demo.entity.Company;
+import com.company.demo.entity.IPODetail;
 import com.company.demo.entity.StockPrice;
 import com.company.demo.model.StockExchange;
 import com.company.demo.service.CompanyService;
@@ -39,6 +40,12 @@ public class CompanyServiceController {
 	public Company getCompany(@PathVariable("companyName") String companyName ){
 		return companyService.getCompanyByName(companyName);
 	}
+	
+	@GetMapping("/get-matches/{pattern}")
+	public ResponseEntity<List<Company>> getMatchingCompany(@PathVariable("pattern") String pattern ){
+		return new ResponseEntity<List<Company>>(companyService.getMatchingCompanies(pattern), HttpStatus.OK);
+	}
+	
 	@GetMapping("/get-stock-exchanges/{companyName}")
 	public List<StockExchange> getStockList(@PathVariable("companyName") String companyName ){
 		return companyService.getStockExchanges(companyName);
@@ -51,7 +58,7 @@ public class CompanyServiceController {
 	}
 	
 	@PostMapping("/register-company")
-	public ResponseEntity<String> addCompany(@RequestBody WrapTwo<String,List<String>> wrap){
+	public ResponseEntity<String> registerCompany(@RequestBody WrapTwo<String,List<String>> wrap){
 		companyService.registerCompany(wrap.getObj1(), wrap.getObj2());
 		return new ResponseEntity<String>("Succes", HttpStatus.OK);
 	}
@@ -95,5 +102,16 @@ public class CompanyServiceController {
 		 int count=companyService.removeStockPrice(companyName, exchangeName, from, to);
 		 return new ResponseEntity<String>(count+ " row(s) deleted", HttpStatus.OK);
 	}
+	
+	@GetMapping("/get-IPO/{companyName}")
+	public ResponseEntity<List<IPODetail>> getIPODetails(@PathVariable("companyName") String companyName ){
+		return new ResponseEntity<List<IPODetail>>(companyService.getIPODetails(companyName), HttpStatus.OK);
+	}
+	
+	@GetMapping("/add-IPO")
+	public void addIPODetails(@RequestBody IPODetail ipo ){
+		companyService.addIPODetail(ipo);
+	}
+	
 
 }
